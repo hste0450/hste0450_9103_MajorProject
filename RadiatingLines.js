@@ -31,6 +31,7 @@ class RadiatingLines {
             let x2 = this.length * cos(angle); // Calculate the endpoint x-coordinate based on the angle
             let y2 = this.length * sin(angle); // Calculate the endpoint y-coordinate based on the angle
             line(0, 0, x2, y2); // Draw the line from the center to the calculated endpoint
+
         }
 
         pop(); // Restore previous drawing settings

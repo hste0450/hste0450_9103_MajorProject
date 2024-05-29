@@ -92,6 +92,7 @@ function draw() {
   diamondAndCircle1.display();
   diamond.display();
   diamond1.display();
+  brokenChain.update();
   brokenChain.display();
   brokenChain2.display();
   brokenChain3.display();
