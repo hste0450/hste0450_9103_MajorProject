@@ -40,7 +40,7 @@ class BrokenChainedCircles {
 
     applyGlow(x, y, diameter) {
         let glowColor = color(this.glowColor[0], this.glowColor[1], this.glowColor[2], this.glowColor[3]); //Set the glow colour
-        drawingContext.shadowBlur = 50; //Set shadow blur for glow effect
+        drawingContext.shadowBlur = 52; //Set shadow blur for glow effect
         drawingContext.shadowColor = glowColor; //Set shadow colour
 
         let circleColor = color(this.circleColor[0], this.circleColor[1], this.circleColor[2], this.circleColor[3]); //Set the circle colour
@@ -48,7 +48,7 @@ class BrokenChainedCircles {
         stroke(circleColor);
         strokeWeight(this.strokeWeight);
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             let increment = i * 2; //Increment size for multiple layers
             ellipse(x, y, diameter + increment, diameter + increment); //Draw the circle with the increment
         }

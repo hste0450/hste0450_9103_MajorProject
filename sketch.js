@@ -12,6 +12,11 @@ let noiseOffsets = [];
   [255, 246, 234, 150], // Yellow glow
 ];
 
+let brokenChain2NoiseOffset = 0;
+let brokenChain3NoiseBuffer = 0;
+let angle2 = 0;
+let angle3 = 0;
+
 function setup() {
   // Set the canvas to the full browser window size
   createCanvas(windowWidth, windowHeight);
@@ -65,10 +70,10 @@ function setup() {
   );
 
   //Diamond to the left
-  diamond = new Diamond(width / 12, height / 2, windowWidth / 20, [255]);
+  diamond = new Diamond(width / 12, height / 1.5, windowWidth / 20, [255]);
 
   //Diamond to the right
-  diamond1 = new Diamond(width / 1.2, height / 2, windowWidth / 30, [255]);
+  diamond1 = new Diamond(width / 1.2, height / 2.5, windowWidth / 30, [255]);
 
   //Glowing flower
   flower = new Flower(windowWidth / 10, windowHeight / 4, 8, windowWidth / 10, windowWidth / 40, [255, 255, 255], 25);
@@ -96,6 +101,27 @@ function draw() {
       noiseOffsets[i][j] += 0.3; // Small increment for smooth changes
     }
   }
+
+   // Incrementally update angle for brokenChain2 using Perlin noise
+   angle2 += (noise(brokenChain2NoiseOffset) - 0.5) * 0.1; // Subtle rotation change
+   push(); // Isolate transformations for brokenChain2
+   translate(brokenChain2.x, brokenChain2.y);
+   rotate(angle2);
+   translate(-brokenChain2.x, -brokenChain2.y); // Re-center rotation at object's position
+   brokenChain2.display();
+   pop(); // Reset transformation matrix
+   brokenChain2NoiseOffset += 0.01; // Slowly increment offset
+ 
+   // Incrementally update angle for brokenChain3 using Perlin noise
+   angle3 += (noise(brokenChain3NoiseBuffer) - 0.5) * 0.1; // Subtle rotation change
+   push(); // Isolate transformations for brokenChain3
+   translate(brokenChain3.x, brokenChain3.y);
+   rotate(angle3);
+   translate(-brokenChain3.x, -brokenChain3.y); // Re-center rotation at object's position
+   brokenChain3.display();
+   pop(); // Reset transformation matrix
+   brokenChain3NoiseBuffer += 0.01; // Slowly increment offset
+ 
 
   // Display all initialized visual components
   concentric.display();
@@ -194,12 +220,12 @@ function windowResized() {
 
   //Calculating the diamond to the left
   diamond.x = windowWidth / 12;
-  diamond.y = windowHeight / 2;
+  diamond.y = windowHeight / 1.5;
   diamond.size = windowWidth / 20;
 
   //Calculating the diamond to the right
   diamond1.x = windowWidth / 1.2;
-  diamond1.y = windowHeight / 2;
+  diamond1.y = windowHeight / 2.5;
   diamond1.size = windowWidth / 30;
 
   //Calculating the diamond with smaller orange circles
