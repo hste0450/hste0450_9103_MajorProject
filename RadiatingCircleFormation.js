@@ -17,6 +17,7 @@ class RadiatingCircleFormation {
     /**
      * Creates radiating line objects arranged in a circular pattern around the center
      */
+    
     createRadiatingObjects() {
         let angleStep = TWO_PI / this.numObjects; // Angle step to evenly distribute objects
         for (let i = 0; i < this.numObjects; i++) {

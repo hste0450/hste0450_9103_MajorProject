@@ -38,7 +38,7 @@ function setup() {
   chain = new ChainedCircles(windowWidth / 2, windowHeight / 2, windowWidth / 10, 50,[134, 169, 228],[255, 255, 255, 255], 1);
 
   // Initialize radiating lines from the center
-  radiatingLines = new RadiatingLines(width / 2, height / 2, windowWidth / 30, 15,[255, 171, 59, 150], 4);
+  radiatingLines = new RadiatingLines(width / 2, height / 2, windowWidth / 30, 200,[255, 171, 59, 150], 1);
 
   // Initialize a glowing circle at the center
   glowingCircle = new GlowingCircle(width / 2, height / 2, width / 70, [255, 77, 0, 150], 20);
@@ -53,7 +53,7 @@ function setup() {
   radiatingFormation = new RadiatingCircleFormation(width / 2, height / 2, windowWidth / 5.5, 24, 20, 8,[134, 169, 228, 150], 2); // Use the same blue glow
 
   // Initialize chain of circles outside the center
-  brokenChain = new BrokenChainedCircles(width / 2, height / 2, width / 4.2, 20, [109, 147, 53, 150], [255, 255, 255, 255], windowWidth / 80);
+  brokenChain = new BrokenChainedCircles(width / 2, height / 2, width / 4.2, 20, [109, 147, 53, 150], [255, 255, 255, 255], windowWidth / 100);
 
   //ELEMENTS OUTSIDE THE CENTER
   //Broken chain to the top-left of the canvas
@@ -79,7 +79,7 @@ function setup() {
   flower = new Flower(windowWidth / 10, windowHeight / 4, 8, windowWidth / 10, windowWidth / 40, [255, 255, 255], 25);
 
   //Radiating lines to the right
-  radiatingLines2 = new RadiatingLines((7 * windowWidth) / 7.5, windowHeight / 1.2, 60, 14, [255, 171, 59, 150], 4);
+  radiatingLines2 = new RadiatingLines((7 * windowWidth) / 7.5, windowHeight / 1.2, 60, 200, [255, 171, 59, 150], 1);
 
   //Glowing circle to the right
   glowingCircle2 = new GlowingCircle((7 * windowWidth) / 7.5, windowHeight / 1.2, 30, [255, 171, 59, 150]);
@@ -98,36 +98,38 @@ function draw() {
     for (let j = 0; j < 4; j++) { // Update each channel (RGBA)
       let noiseValue = noise(noiseOffsets[i][j]);
       glowColors[i][j] = map(noiseValue, 0, 1, 0, 255); // Map noise to color values
-      noiseOffsets[i][j] += 0.3; // Small increment for smooth changes
+      noiseOffsets[i][j] += 0.2; // Small increment for smooth changes
     }
   }
 
    // Incrementally update angle for brokenChain2 using Perlin noise
-   angle2 += (noise(brokenChain2NoiseOffset) - 0.5) * 0.1; // Subtle rotation change
+   angle2 += (noise(brokenChain2NoiseOffset) - 0.5) * 0.05; // Subtle rotation change
    push(); // Isolate transformations for brokenChain2
    translate(brokenChain2.x, brokenChain2.y);
    rotate(angle2);
    translate(-brokenChain2.x, -brokenChain2.y); // Re-center rotation at object's position
    brokenChain2.display();
    pop(); // Reset transformation matrix
-   brokenChain2NoiseOffset += 0.01; // Slowly increment offset
+   brokenChain2NoiseOffset += 0.1; // Slowly increment offset
  
    // Incrementally update angle for brokenChain3 using Perlin noise
-   angle3 += (noise(brokenChain3NoiseBuffer) - 0.5) * 0.1; // Subtle rotation change
+   angle3 += (noise(brokenChain3NoiseBuffer) - 0.5) * 0.05; // Subtle rotation change
    push(); // Isolate transformations for brokenChain3
    translate(brokenChain3.x, brokenChain3.y);
    rotate(angle3);
    translate(-brokenChain3.x, -brokenChain3.y); // Re-center rotation at object's position
    brokenChain3.display();
    pop(); // Reset transformation matrix
-   brokenChain3NoiseBuffer += 0.01; // Slowly increment offset
+   brokenChain3NoiseBuffer += 0.1; // Slowly increment offset
  
 
   // Display all initialized visual components
   concentric.display();
   chain.display();
   flower.display();
+  radiatingLines.update();
   radiatingLines.display();
+  radiatingLines2.update();
   radiatingLines2.display();
   circleFormation.display();
   glowingCircle.display();
@@ -139,8 +141,6 @@ function draw() {
   diamond.display();
   diamond1.display();
   brokenChain.display();
-  brokenChain2.display();
-  brokenChain3.display();
 }
 
 // Adjust visual components when the browser window is resized
@@ -200,7 +200,7 @@ function windowResized() {
   brokenChain.x = windowWidth / 2;
   brokenChain.y = windowHeight / 2;
   brokenChain.radius = max(windowHeight / 4.2, windowWidth / 4.2);
-  brokenChain.strokeWeight = min(windowWidth / 80, windowHeight / 80);
+  brokenChain.strokeWeight = min(windowWidth / 100, windowHeight / 100);
   brokenChain.positions = [];
   brokenChain.setupPositions(); // Recalculate positions with new dimensions
 

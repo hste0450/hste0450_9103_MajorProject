@@ -48,7 +48,7 @@ class BrokenChainedCircles {
         stroke(circleColor);
         strokeWeight(this.strokeWeight);
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             let increment = i * 2; //Increment size for multiple layers
             ellipse(x, y, diameter + increment, diameter + increment); //Draw the circle with the increment
         }
