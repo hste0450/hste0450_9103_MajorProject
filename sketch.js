@@ -1,18 +1,29 @@
 // Declare variables for various visual components
-let concentric, glowingCircle, radiatingLines, circleFormation, chain, diamondFormation, radiatingFormation, brokenChain, brokenChain2, brokenChain3, diamond, diamond1, diamondAndCircle, diamondAndCircle1, flowerCircle, flower, radiatingLines2, glowingCircle2;
+let concentric, glowingCircle, radiatingLines, circleFormation, chain, diamondFormation, radiatingFormation, brokenChain, brokenChain2, brokenChain3, diamond, diamond1, diamondAndCircle, diamondAndCircle1, flowerCircle, flower, radiatingLines2, glowingCircle2, radiusAnimation;
+
+let noiseOffsets = [];
+
+ // Define an array of RGBA colors for glowing effects
+ let glowColors = [
+  [199, 74, 134, 150], // Pink glow
+  [109, 147, 53, 150], // Green glow
+  [134, 169, 228, 150], // Blue glow
+  [255, 171, 59, 150], // Orange glow
+  [255, 246, 234, 150], // Yellow glow
+];
 
 function setup() {
   // Set the canvas to the full browser window size
   createCanvas(windowWidth, windowHeight);
 
-  // Define an array of RGBA colors for glowing effects
-  const glowColors = [
-    [199, 74, 134, 150], // Pink glow
-    [109, 147, 53, 150], // Green glow
-    [134, 169, 228, 150], // Blue glow
-    [255, 171, 59, 150], // Orange glow
-    [255, 246, 234, 150], // Yellow glow
-  ];
+   // Initialize noiseOffsets with random starting points for smoother transitions
+   for (let i = 0; i < glowColors.length; i++) {
+    let offsets = [];
+    for (let j = 0; j < 4; j++) { // Assuming RGBA
+      offsets.push(random(1000)); // Random starting points for noise
+    }
+    noiseOffsets.push(offsets);
+  }
 
   //ELEMENTS IN THE CENTER OF THE CANVAS
   // Initialize concentric circles at the center with a radius and number of layers
@@ -39,7 +50,6 @@ function setup() {
   // Initialize chain of circles outside the center
   brokenChain = new BrokenChainedCircles(width / 2, height / 2, width / 4.2, 20, [109, 147, 53, 150], [255, 255, 255, 255], windowWidth / 80);
 
-  
   //ELEMENTS OUTSIDE THE CENTER
   //Broken chain to the top-left of the canvas
   brokenChain2 = new BrokenChainedCircles(windowWidth / 16, windowHeight / 9, width / 6, 20, [199, 74, 134, 150],[255, 255, 255, 255], windowWidth / 250);
@@ -77,6 +87,16 @@ function setup() {
 function draw() {
   // Set background color
   background(27, 27, 37);
+
+   // Update colors using Perlin noise
+   for (let i = 0; i < glowColors.length; i++) {
+    for (let j = 0; j < 4; j++) { // Update each channel (RGBA)
+      let noiseValue = noise(noiseOffsets[i][j]);
+      glowColors[i][j] = map(noiseValue, 0, 1, 0, 255); // Map noise to color values
+      noiseOffsets[i][j] += 0.3; // Small increment for smooth changes
+    }
+  }
+
   // Display all initialized visual components
   concentric.display();
   chain.display();
@@ -92,7 +112,6 @@ function draw() {
   diamondAndCircle1.display();
   diamond.display();
   diamond1.display();
-  brokenChain.update();
   brokenChain.display();
   brokenChain2.display();
   brokenChain3.display();

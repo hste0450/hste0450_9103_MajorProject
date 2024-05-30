@@ -4,14 +4,13 @@ class BrokenChainedCircles {
     constructor(x, y, radius, count, glowColor, circleColor, strokeWeight) {
         this.x = x; //Center x-coordinate
         this.y = y; //Center y-coordinate
-        this.baseRadius = radius; //Radius of the arrangement
+        this.radius = radius; //Radius of the arrangement
         this.count = count; //Number of circles
         this.glowColor = glowColor; //Colour of the glow
         this.circleColor = circleColor; //Colour of the circles
         this.strokeWeight = strokeWeight; //Stroke thickness
         this.sizePattern = [1.0, 0.8, 0.6, 0.8, 1.0, 1.2, 1.4, 1.2]; //Pattern of sizes for the circles
         this.positions = []; //Array to store positions and sizes of the circles
-        this.angleOffsets = new Array(count).fill(0).map(() => random(TWO_PI)); // Random initial angles for rotation
         this.setupPositions(); //Initialize positions
     }
 
@@ -30,38 +29,6 @@ class BrokenChainedCircles {
             angle += angleStep; // Increment angle for the next position/circle
         }
     }
-
-    updatePosition(index, angle, init = false) {
-        let sizeMultiplier = this.sizePattern[index % this.sizePattern.length];
-        let circleDiameter = ((1.5 * PI * this.baseRadius) / this.count) * sizeMultiplier * 0.5;
-        let time = millis() / 5000;  // Slower time factor for smoother changes
-    
-        if (!init) {
-            let radiusNoiseFactor = noise(this.x * 0.005 + index, this.y * 0.005 + index, time);  // Slowed down noise factor
-            let radiusNoise = this.baseRadius + map(radiusNoiseFactor, 0, 1, -20, 20);
-            let posX = this.x + cos(angle) * radiusNoise;
-            let posY = this.y + sin(angle) * radiusNoise;
-            let sizeNoiseFactor = noise(this.x * 0.005 + index * 0.5, this.y * 0.005 + index * 0.5, time);
-            circleDiameter *= map(sizeNoiseFactor, 0, 1, 0.8, 1.2);
-    
-            this.positions[index] = {x: posX, y: posY, diameter: circleDiameter};
-        } else {
-            let posX = this.x + cos(angle) * this.baseRadius;
-            let posY = this.y + sin(angle) * this.baseRadius;
-            this.positions[index] = {x: posX, y: posY, diameter: circleDiameter};
-        }
-    }
-
-    update() {
-        let angleStep = 2 * PI / this.count;
-        let angle = 0;
-    
-        for (let i = 0; i < this.count; i++) {
-            this.updatePosition(i, angle);
-            angle += angleStep;
-        }
-    }
-    
 
     display() {
         blendMode(ADD); //Set blend mote to ADD for glowing effect
