@@ -15,7 +15,7 @@ class Flower {
   // Method to display the flower on the canvas
   display() {
     push(); // Save the current drawing style settings and transformations
-    this.petalSize = (windowWidth/40, windowWidth/40);
+    this.petalSize = (windowWidth/50, windowWidth/50);
     this.centerSize = (windowWidth/50, windowWidth/50);
     translate(this.x, this.y); // Move the origin to the flower's center
     rotate(this.angle); // Rotate the flower for dynamic visual effect

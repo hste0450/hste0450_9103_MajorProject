@@ -1,64 +1,57 @@
 //This class defines a chain of glowing circles arranged in a circular pattern
 
 class ChainedCircles {
-     //Constructor initializes a new instance of ChainedCircles with a central position, radius, count of circles, and customizable colors and stroke weight
     constructor(x, y, radius, count, glowColor = [0, 100, 255, 150], circleColor = [255, 255, 255, 255], strokeWeight = 1) {
-        this.x = x; //X-coordinate of the center of the chain
-        this.y = y; //Y-coordinate of the center of the chain
-        this.radius = radius; //Radius of the circle on which the centers of the small circles lie
-        this.count = count; //Total number of circles in the chain
-        this.glowColor = glowColor; // Color for the glow, defaults to a semi-transparent blue
-        this.circleColor = circleColor; // Color for the circles, defaults to opaque white
-        this.strokeWeight = strokeWeight;
-        this.sizePattern = [1.0, 0.8, 0.6, 0.8, 1.0, 1.2, 1.4, 1.2]; // Pattern to vary the size of the circles in the chain
+        this.x = x; // X-coordinate of the center of the chain
+        this.y = y; // Y-coordinate of the center of the chain
+        this.radius = radius; // Radius on which the centers of the circles lie
+        this.count = count; // Total number of circles
+        this.glowColor = glowColor; // Color for the glow
+        this.circleColor = circleColor; // Color for the circles
+        this.strokeWeight = strokeWeight; // Stroke weight for the circles
+        this.sizePattern = [1.0, 0.8, 0.6, 0.8, 1.0, 1.2, 1.4, 1.2]; // Size pattern for the circles
+        this.noiseOffset = random(1000); // Starting point for Perlin noise
+        this.positions = []; // Positions of circles
     }
-    
-    //Displays the chained circles with glowing effects on the canvas
-    display() {
-        blendMode(ADD); // Use additive blending to enhance the glow effect
-        let angle = 0; // Start angle for the first circle
-        let previousDiameter = 0; // Diameter of the previous circle, used to calculate the next position
 
+    // Updates positions and sizes using Perlin noise for a natural, organic feel
+    update() {
+        let angle = noise(this.noiseOffset) * TWO_PI; // Use noise to vary the starting angle
+        this.noiseOffset += 0.005; // Increment the noise offset to change the angle gradually
+
+        this.positions = [];
         for (let i = 0; i < this.count; i++) {
-            let sizeMultiplier = this.sizePattern[i % this.sizePattern.length]; // Get the size multiplier from the pattern
-            let circleDiameter = ((2 * PI * this.radius) / this.count) * sizeMultiplier; // Calculate diameter based on the size pattern and circle count
+            let sizeMultiplier = this.sizePattern[i % this.sizePattern.length]; // Select the size multiplier from the pattern
+            let circleDiameter = ((2 * PI * this.radius) / this.count) * sizeMultiplier; // Calculate the diameter for each circle
+            angle += asin(circleDiameter / (2 * this.radius)); // Adjust angle to position the circle so it touches or overlaps the previous one
 
-            // Calculate the incremental angle to place each circle just touching the previous
-            if (i > 0) {
-                angle += asin((previousDiameter / 2 + circleDiameter / 2) / this.radius);
-            }
+            let posX = this.x + cos(angle) * this.radius; // Calculate the x-coordinate for the circle
+            let posY = this.y + sin(angle) * this.radius; // Calculate the y-coordinate for the circle
 
-            // Calculate the position of the circle based on the current angle
-            let posX = this.x + cos(angle) * this.radius;
-            let posY = this.y + sin(angle) * this.radius;
-            
-            // Apply the glow effect to the circle
-            this.applyGlow(posX, posY, circleDiameter);
-
-            // Update the diameter for the next iteration
-            previousDiameter = circleDiameter;
+            this.positions.push({x: posX, y: posY, diameter: circleDiameter});
+            angle += asin(circleDiameter / (2 * this.radius)); // Update angle for next circle
         }
-
-        blendMode(BLEND); // Reset blending mode to normal to avoid affecting other graphic elements
     }
 
-     //Applies a glowing effect to the circles
-        applyGlow(x, y, diameter) {
-        // Set the shadow (glow) properties for the circle
-        let glowColor = color(this.glowColor[0], this.glowColor[1], this.glowColor[2], this.glowColor[3]);
-        drawingContext.shadowBlur = 50; // Set the glow spread
-        drawingContext.shadowColor = glowColor; // Set the glow color
-
-        // Set the drawing properties for the circle
-        let circleColor = color(this.circleColor[0], this.circleColor[1], this.circleColor[2], this.circleColor[3]);
-        noFill();
-        stroke(circleColor);
-        strokeWeight(this.strokeWeight);
-
-        // Draw the circle multiple times with slight size increments to enhance the glow effect
-        for (let i = 0; i < 3; i++) {
-            let increment = i * 2;  // Incremental increase in diameter for each layer
-            ellipse(x, y, diameter + increment, diameter + increment);
+    // Displays the chained circles with glowing effects
+    display() {
+        blendMode(ADD); //Set blend mode to add for glow effect
+        for (const pos of this.positions) {
+            this.applyGlow(pos.x, pos.y, pos.diameter); // Apply the glow effect to each circle
         }
+        blendMode(BLEND); // Reset blend mode to default
+    }
+
+    // Applies a glowing effect to the circles
+    applyGlow(x, y, diameter) {
+        let glowColor = color(this.glowColor[0], this.glowColor[1], this.glowColor[2], this.glowColor[3]);
+        drawingContext.shadowBlur = 20; // Set shadow blur for glow effect
+        drawingContext.shadowColor = glowColor; // Set shadow color for glow effect
+
+        let circleColor = color(this.circleColor[0], this.circleColor[1], this.circleColor[2], this.circleColor[3]);
+        noFill(); // Don't fill the circle, only draw its outline
+        stroke(circleColor); // Set the stroke color
+        strokeWeight(this.strokeWeight); // Set the stroke weight
+        ellipse(x, y, diameter, diameter); // Draw the circle
     }
 }

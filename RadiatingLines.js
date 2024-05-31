@@ -1,7 +1,7 @@
 //This class represents a set of radiating lines
 
 class RadiatingLines {
-    constructor(x, y, length, numLines, glowColor = [134, 169, 228, 150], strokeWeight = 1, angleOffset = 0) {
+    constructor(x, y, length, numLines, glowColor = [134, 169, 228, 150], strokeWeight = 1) {
         this.x = x; // Central x-coordinate for the radiating lines
         this.y = y; // Central y-coordinate for the radiating lines
         this.length = length; // Length of each line
@@ -12,12 +12,12 @@ class RadiatingLines {
         this.angles = new Array(numLines).fill(0).map((_, i) => TWO_PI / numLines * i); // Initial angles
     }
 
+    //Update method to modify line angels based on Perlin noise for dynamic movement
     update() {
-        // Update angles based on Perlin noise
         for (let i = 0; i < this.numLines; i++) {
-            let noiseFactor = noise(this.noiseOffsets[i]);
-            this.angles[i] += map(noiseFactor, 0, 1, -0.01, 0.01); // 
-            this.noiseOffsets[i] += 0.5; // Adjust for smoother or more rapid changes
+            let noiseFactor = noise(this.noiseOffsets[i]); //Generate noise based on the offset
+            this.angles[i] += map(noiseFactor, 0, 1, -0.01, 0.01); // Modify the angle using noise
+            this.noiseOffsets[i] += 0.5; // Increment the noise offset for next frame
         }}
   
     /**
