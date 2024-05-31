@@ -1,15 +1,16 @@
-//This class manages a broken chain of glowing circles
+//This class manages a broken chain of glowing circles, which manages a set of glowing circles arranged in a broken chain pattern
 
 class BrokenChainedCircles {
+    //Constructor initializes the properties of the BrokenChainedCircles object
     constructor(x, y, radius, count, glowColor, circleColor, strokeWeight) {
-        this.x = x; //Center x-coordinate
-        this.y = y; //Center y-coordinate
+        this.x = x; //Center x-coordinate of the circle arrangement
+        this.y = y; //Center y-coordinate of the circle arrangement
         this.radius = radius; //Radius of the arrangement
-        this.count = count; //Number of circles
-        this.glowColor = glowColor; //Colour of the glow
-        this.circleColor = circleColor; //Colour of the circles
-        this.strokeWeight = strokeWeight; //Stroke thickness
-        this.sizePattern = [1.0, 0.8, 0.6, 0.8, 1.0, 1.2, 1.4, 1.2]; //Pattern of sizes for the circles
+        this.count = count; //Total number of circles in the chain
+        this.glowColor = glowColor; //Colour of the glow effect
+        this.circleColor = circleColor; //Colour of the circles themselves
+        this.strokeWeight = strokeWeight; //Stroke thickness for each circle
+        this.sizePattern = [1.0, 0.8, 0.6, 0.8, 1.0, 1.2, 1.4, 1.2]; //Pattern to vary the size of circles in the chain
         this.positions = []; //Array to store positions and sizes of the circles
         this.setupPositions(); //Initialize positions
     }
@@ -40,7 +41,7 @@ class BrokenChainedCircles {
 
     applyGlow(x, y, diameter) {
         let glowColor = color(this.glowColor[0], this.glowColor[1], this.glowColor[2], this.glowColor[3]); //Set the glow colour
-        drawingContext.shadowBlur = 52; //Set shadow blur for glow effect
+        drawingContext.shadowBlur = 30; //Set shadow blur for glow effect
         drawingContext.shadowColor = glowColor; //Set shadow colour
 
         let circleColor = color(this.circleColor[0], this.circleColor[1], this.circleColor[2], this.circleColor[3]); //Set the circle colour
@@ -48,7 +49,7 @@ class BrokenChainedCircles {
         stroke(circleColor);
         strokeWeight(this.strokeWeight);
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             let increment = i * 2; //Increment size for multiple layers
             ellipse(x, y, diameter + increment, diameter + increment); //Draw the circle with the increment
         }

@@ -10,13 +10,14 @@ class ConcentricCircles {
       this.glowColors = glowColors;  // Array of glow colours
   }
 
+//Displays the concentric circles on the canvas
   display() {
       for (let i = 0; i < this.levels; i++) {
           let r = this.radius * ((this.levels - i) / this.levels); //Calculate radius of each level
           let currentColor = this.glowColors[i % this.glowColors.length];  // Cycle through provided colors
 
           // Set shadow properties for glow effect
-          drawingContext.shadowBlur = 20;  // Apply consistent glow effect
+          drawingContext.shadowBlur = 30;  // Apply consistent glow effect
           drawingContext.shadowColor = `rgba(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]}, ${currentColor[3] / 255})`;
 
           //Draw the circle with specified properties
@@ -24,7 +25,7 @@ class ConcentricCircles {
           // Set stroke properties
           stroke(255); 
           strokeWeight(this.strokeWeight);
-          for (let j = 0; j < 3; j++) {  // Draw each circle 3 times to enhance the glow
+          for (let j = 0; j < 4; j++) {  // Draw each circle 3 times to enhance the glow
             ellipse(this.x, this.y, r * 2, r * 2);
         }
 

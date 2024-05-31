@@ -1,5 +1,5 @@
 // Declare variables for various visual components
-let concentric, glowingCircle, radiatingLines, circleFormation, chain, diamondFormation, radiatingFormation, brokenChain, brokenChain2, brokenChain3, diamond, diamond1, diamondAndCircle, diamondAndCircle1, flowerCircle, flower, radiatingLines2, glowingCircle2, radiusAnimation;
+let concentric, glowingCircle, radiatingLines, circleFormation, chain, diamondFormation, radiatingFormation, brokenChain, brokenChain2, brokenChain3, diamond, diamond1, diamond2, diamond3, diamondAndCircle, diamondAndCircle1, flowerCircle, flower, radiatingLines2, glowingCircle2, radiusAnimation;
 
 let noiseOffsets = [];
 
@@ -11,16 +11,12 @@ let noiseOffsets = [];
   [255, 171, 59, 150], // Orange glow
   [255, 246, 234, 150], // Yellow glow
 ];
-
-let brokenChain2NoiseOffset = 0;
-let brokenChain3NoiseBuffer = 0;
-let angle2 = 0;
-let angle3 = 0;
+  let brokenChainNoiseOffset = 0;
+  let angle2 = 0;
 
 function setup() {
   // Set the canvas to the full browser window size
   createCanvas(windowWidth, windowHeight);
-
    // Initialize noiseOffsets with random starting points for smoother transitions
    for (let i = 0; i < glowColors.length; i++) {
     let offsets = [];
@@ -32,7 +28,7 @@ function setup() {
 
   //ELEMENTS IN THE CENTER OF THE CANVAS
   // Initialize concentric circles at the center with a radius and number of layers
-  concentric = new ConcentricCircles(windowWidth / 2, windowHeight / 2, windowWidth / 5, 5, 4, glowColors);
+  concentric = new ConcentricCircles(windowWidth / 2, windowHeight / 2, windowWidth / 5, 5, 3, glowColors);
 
   // Initialize chain of circles at the center
   chain = new ChainedCircles(windowWidth / 2, windowHeight / 2, windowWidth / 10, 50,[134, 169, 228],[255, 255, 255, 255], 1);
@@ -41,7 +37,7 @@ function setup() {
   radiatingLines = new RadiatingLines(width / 2, height / 2, windowWidth / 30, 200,[255, 171, 59, 150], 1);
 
   // Initialize a glowing circle at the center
-  glowingCircle = new GlowingCircle(width / 2, height / 2, width / 70, [255, 77, 0, 150], 20);
+  glowingCircle = new GlowingCircle(width / 2, height / 2, width / 100, [255, 77, 0, 150], 20);
 
   // Initialize formations of diamonds and circles in a circular arrangement
   diamondFormation = new DiamondFormation(width / 2, height / 2, windowWidth / 7.2, windowWidth / 105, 15);
@@ -73,16 +69,22 @@ function setup() {
   diamond = new Diamond(width / 12, height / 1.5, windowWidth / 20, [255]);
 
   //Diamond to the right
-  diamond1 = new Diamond(width / 1.2, height / 2.5, windowWidth / 30, [255]);
+  diamond1 = new Diamond(width / 1.1, height / 2.5, windowWidth / 30, [255]);
+
+  //Diamond to the right
+  diamond2 = new Diamond(width / 1.02, height / 10, windowWidth / 30, [255]);
+
+  //Diamond to the left
+  diamond3 = new Diamond(width / 16, height / 1.1, windowWidth / 30, [255]);
 
   //Glowing flower
-  flower = new Flower(windowWidth / 10, windowHeight / 4, 8, windowWidth / 10, windowWidth / 40, [255, 255, 255], 25);
+  flower = new Flower(windowWidth / 10, windowHeight / 4, glowColors, windowHeight/40);
 
   //Radiating lines to the right
   radiatingLines2 = new RadiatingLines((7 * windowWidth) / 7.5, windowHeight / 1.2, 60, 200, [255, 171, 59, 150], 1);
 
   //Glowing circle to the right
-  glowingCircle2 = new GlowingCircle((7 * windowWidth) / 7.5, windowHeight / 1.2, 30, [255, 171, 59, 150]);
+  glowingCircle2 = new GlowingCircle((7 * windowWidth) / 7.5, windowHeight / 1.2, windowWidth/70, [255, 171, 59, 150]);
 
   // Call the windowResized function to adjust layout based on current window size
   windowResized();
@@ -98,35 +100,45 @@ function draw() {
     for (let j = 0; j < 4; j++) { // Update each channel (RGBA)
       let noiseValue = noise(noiseOffsets[i][j]);
       glowColors[i][j] = map(noiseValue, 0, 1, 0, 255); // Map noise to color values
-      noiseOffsets[i][j] += 0.2; // Small increment for smooth changes
+      noiseOffsets[i][j] += 0.3; // Small increment for smooth changes
     }
   }
 
    // Incrementally update angle for brokenChain2 using Perlin noise
-   angle2 += (noise(brokenChain2NoiseOffset) - 0.5) * 0.05; // Subtle rotation change
+   angle2 += map(noise(brokenChainNoiseOffset), 0, 1, -0.005, 0.005); // Subtle rotation change
    push(); // Isolate transformations for brokenChain2
    translate(brokenChain2.x, brokenChain2.y);
    rotate(angle2);
    translate(-brokenChain2.x, -brokenChain2.y); // Re-center rotation at object's position
    brokenChain2.display();
    pop(); // Reset transformation matrix
-   brokenChain2NoiseOffset += 0.1; // Slowly increment offset
+   brokenChainNoiseOffset += 0.05; // Slowly increment offset
  
    // Incrementally update angle for brokenChain3 using Perlin noise
-   angle3 += (noise(brokenChain3NoiseBuffer) - 0.5) * 0.05; // Subtle rotation change
+   angle2 += map(noise(brokenChainNoiseOffset), 0, 1, -0.005, 0.005); // Subtle rotation change
    push(); // Isolate transformations for brokenChain3
    translate(brokenChain3.x, brokenChain3.y);
-   rotate(angle3);
+   rotate(angle2);
    translate(-brokenChain3.x, -brokenChain3.y); // Re-center rotation at object's position
    brokenChain3.display();
    pop(); // Reset transformation matrix
-   brokenChain3NoiseBuffer += 0.1; // Slowly increment offset
- 
+   brokenChainNoiseOffset += 0.05; // Slowly increment offset
+
+    // Incrementally update angle for brokenChain3 using Perlin noise
+    angle2 += map(noise(brokenChainNoiseOffset), 0, 1, -0.005, 0.005); // Subtle rotation change
+    push(); // Isolate transformations for brokenChain3
+    translate(brokenChain.x, brokenChain.y);
+    rotate(angle2);
+    translate(-brokenChain.x, -brokenChain.y); // Re-center rotation at object's position
+    brokenChain.display();
+    pop(); // Reset transformation matrix
+    brokenChainNoiseOffset += 0.05; // Slowly increment offset
+
+  flower.display();
 
   // Display all initialized visual components
   concentric.display();
   chain.display();
-  flower.display();
   radiatingLines.update();
   radiatingLines.display();
   radiatingLines2.update();
@@ -138,9 +150,14 @@ function draw() {
   radiatingFormation.display();
   diamondAndCircle.display();
   diamondAndCircle1.display();
+  diamond.update();
   diamond.display();
+  diamond1.update();
   diamond1.display();
-  brokenChain.display();
+  diamond2.display();
+  diamond2.update();
+  diamond3.display();
+  diamond3.update();
 }
 
 // Adjust visual components when the browser window is resized
@@ -157,7 +174,7 @@ function windowResized() {
   // Calculating the glowing circle in the middle of the canvas
   glowingCircle.x = windowWidth / 2;
   glowingCircle.y = windowHeight / 2;
-  glowingCircle.radius = max(windowWidth / 70, windowHeight / 70);
+  glowingCircle.radius = max(windowWidth / 100, windowHeight / 100);
 
   // Calculating the radiating lines in the middle of the canvas
   radiatingLines.x = windowWidth / 2;
@@ -224,9 +241,19 @@ function windowResized() {
   diamond.size = windowWidth / 20;
 
   //Calculating the diamond to the right
-  diamond1.x = windowWidth / 1.2;
+  diamond1.x = windowWidth / 1.1;
   diamond1.y = windowHeight / 2.5;
   diamond1.size = windowWidth / 30;
+
+  //Calculating the diamond to the right
+  diamond2.x = windowWidth / 1.02;
+  diamond2.y = windowHeight / 10;
+  diamond2.size = windowWidth / 30;
+
+   //Calculating the diamond to the left
+   diamond3.x = windowWidth / 16;
+   diamond3.y = windowHeight / 1.1;
+   diamond2.size = windowWidth / 30;
 
   //Calculating the diamond with smaller orange circles
   diamondAndCircle.xPos = (7 * windowWidth) / 8;
@@ -241,14 +268,13 @@ function windowResized() {
   //Calculating the flower
   flower.x = windowWidth / 12;
   flower.y = windowHeight / 5;
-  flower.petalWidth = min(windowWidth / 10, windowHeight / 10);
-  flower.petalHeight = min(windowWidth / 40, windowHeight / 40);
-  flower.centerSize = min(windowWidth / 40, windowHeight / 40);
+  flower.centerSize = min(windowWidth / 50, windowHeight / 50);
+  flower.petalSize = min(windowWidth / 40, windowHeight / 40);
 
   // Calculating the glowing circle to the right of the canvas
   glowingCircle2.x = (7 * windowWidth) / 7.5;
   glowingCircle2.y = windowHeight / 1.2;
-  glowingCircle2.radius = max(windowWidth / 40, windowHeight / 40);
+  glowingCircle2.radius = max(windowWidth / 70, windowHeight / 70);
 
   // Calculating the glowing radiating lines to the right of the canvas
   radiatingLines2.x = (7 * windowWidth) / 7.5;

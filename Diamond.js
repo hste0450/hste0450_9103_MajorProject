@@ -7,6 +7,15 @@ class Diamond {
     this.y = y; //Center y-coordinate of the diamond
     this.size = size; //Size of the swuare that forms the basis of the diamond
     this.colour = colour; //Colour of the central square
+    this.noiseOffset = random (1000);
+  }
+
+  // Method to dynamically update the diamond's size based on Perlin noise
+  update () {
+     // Change the size based on Perlin noise
+     let noiseFactor = noise(this.noiseOffset);
+     this.size = map(noiseFactor, 0, 1, windowWidth/100, windowWidth/20); // Scale size between 10 and 70 based on noise
+     this.noiseOffset += 0.2; // Increment noise offset for smooth changes
   }
 
   /*
