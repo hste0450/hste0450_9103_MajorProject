@@ -1,6 +1,6 @@
 //This class defines a set of concentric circles with glowing effects
 
-class ConcentricCircles {
+class ConcentricCircles { 
   constructor(x, y, radius, levels, strokeWeight = 1, glowColors) {
       this.x = x; //Center x-coordinate
       this.y = y; //Center y-coordinate

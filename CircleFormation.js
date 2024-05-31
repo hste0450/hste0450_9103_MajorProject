@@ -1,6 +1,6 @@
 // This class defines a formation of glowing circles arranged in a circular pattern around a central point
 
-class CircleFormation {
+class CircleFormation { 
      //Constructs a formation of glowing circles.
     constructor(centerX, centerY, outerRadius, innerCircleRadius, count, glowColors, shadowBlur) {
         this.centerX = centerX;  // Center x-coordinate of the circle formation

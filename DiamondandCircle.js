@@ -1,7 +1,7 @@
 // This class represents a composite geometric design combining a central diamond shape with glowing circles around its perimeter
 
 class DiamondAndCircle {
-  //constructs a DiamondAndCircle object
+  //Constructs a DiamondAndCircle object
   constructor(xPos, yPos, size, colourDiamond, colourCircles, glowColor) {
     this.xPos = xPos; // X-coordinate of the diamond's center
     this.yPos = yPos; // Y-coordinate of the diamond's center

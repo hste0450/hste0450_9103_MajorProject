@@ -1,6 +1,6 @@
 //This class defines a formation of diamond shapes arranged in a circular pattern around a central point
 
-class DiamondFormation{
+class DiamondFormation{ 
     //Constructs a DiamondFormation object
     constructor(centerX, centerY, outerRadius, diamondSize, count) {
         this.centerX = centerX; // Center x-coordinate of the diamond formation

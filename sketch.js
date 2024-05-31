@@ -84,7 +84,7 @@ function setup() {
   flower = new Flower(windowWidth / 10, windowHeight / 4, glowColors, windowHeight/40);
 
   //Radiating lines to the right
-  radiatingLines2 = new RadiatingLines((7 * windowWidth) / 7.5, windowHeight / 1.2, 60, 200, [255, 171, 59, 150], 1);
+  radiatingLines2 = new RadiatingLines((7 * windowWidth) / 7.5, windowHeight / 1.2, windowWidth/15, 250, [255, 171, 59, 150], 1);
 
   //Glowing circle to the right
   glowingCircle2 = new GlowingCircle((7 * windowWidth) / 7.5, windowHeight / 1.2, windowWidth/70, [255, 171, 59, 150]);
@@ -304,5 +304,5 @@ function windowResized() {
   // Calculating the glowing radiating lines to the right of the canvas
   radiatingLines2.x = (7 * windowWidth) / 7.5;
   radiatingLines2.y = windowHeight / 1.2;
-  radiatingLines2.length = min(windowWidth / 10, windowHeight / 10);
+  radiatingLines2.length = max(windowWidth / 15, windowHeight / 15);
 }
