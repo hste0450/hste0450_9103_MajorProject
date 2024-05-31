@@ -24,11 +24,11 @@ This repository hosts the development files for the "Modern Wheel of Fortune," a
 
 #### Individual approach
 
-Unlike other group members who have concentrated their efforts on user interaction, audio, and time-based animations, my contribution uniquely leverages Perlin Noise and randomness to introduce distinct visual dynamics into the project. Here are the specific aspects that set my work apart:
+Unlike other group members who have concentrated their efforts on *user interaction*, *audio*, and *time-based* animations, my contribution uniquely leverages *Perlin Noise* and *randomness* to introduce distinct visual dynamics into the project. Here are the specific aspects that set my work apart:
 
 - **Rotational Dynamics**: I've implemented noise-driven rotations that affect both the individual elements and the overall artwork, creating a natural and continuous movement that mimics the unpredictability of nature, contrasting with the deliberate time-based rotations and mouse-driven interactions developed by my peers.
 
-- **Blinking Diamonds**: My approach includes dynamic changes in the visibility and size of geometric shapes, specifically diamonds, which "blink" intermittently using randomness. This feature stands in contrast to the more constant and predictable transformations applied in other aspects of our project.
+- **Blinking Diamonds**: My approach includes dynamic changes in the visibility and size of geometric shapes, specifically diamonds, which "blink" intermittently using randomness. 
 
 - **Colour Variability**: While others have used audio cues to shift colours, I have utilized randomness and noise to continuously shift the colours of elements in an unpredictable manner. This not only adds visual interest but also reinforces the theme of spontaneocity and constant change.
 
