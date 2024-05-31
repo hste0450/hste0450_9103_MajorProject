@@ -35,7 +35,7 @@ function setup() {
   concentric = new ConcentricCircles(windowWidth / 2, windowHeight / 2, windowWidth / 5, 5, 3, glowColors);
 
   // Initialize chain of circles at the center
-  chain = new ChainedCircles(windowWidth / 2, windowHeight / 2, windowWidth / 10, 50,[134, 169, 228],[255, 255, 255, 255], 2);
+  chain = new ChainedCircles(windowWidth / 2, windowHeight / 2, windowWidth / 10, 50, [199, 74, 134, 150],[255, 255, 255, 255], 3);
 
   // Initialize radiating lines from the center
   radiatingLines = new RadiatingLines(width / 2, height / 2, windowWidth / 30, 200,[255, 171, 59, 150], 1);
@@ -60,7 +60,7 @@ function setup() {
   brokenChain2 = new BrokenChainedCircles(windowWidth / 16, windowHeight / 9, width / 6, 20, [199, 74, 134, 150],[255, 255, 255, 255], windowWidth / 250);
 
   //Broken chain to the bottom-right of the canvas
-  brokenChain3 = new BrokenChainedCircles(windowWidth / 1.05, windowHeight / 1.2, width / 6, 20, [255, 255, 255], windowWidth / 250);
+  brokenChain3 = new BrokenChainedCircles(windowWidth / 1.05, windowHeight / 1.2, width / 6, 20,[134, 169, 228, 150],[255, 255, 255], windowWidth / 250);
 
   //Diamond with smaller orange circles sorrounding it
   diamondAndCircle = new DiamondAndCircle((7 * windowWidth) / 8, windowHeight / 5, windowWidth / 15, [255], [255],[255, 171, 59, 150]);

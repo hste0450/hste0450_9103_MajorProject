@@ -44,7 +44,7 @@ class BrokenChainedCircles {
     //Method to draw a glowing circle at a specific position and size
     applyGlow(x, y, diameter) {
         let glowColor = color(this.glowColor[0], this.glowColor[1], this.glowColor[2], this.glowColor[3]); //Set the glow colour
-        drawingContext.shadowBlur = 30; //Set shadow blur for glow effect
+        drawingContext.shadowBlur = 40; //Set shadow blur for glow effect
         drawingContext.shadowColor = glowColor; //Set shadow colour to the glow colour
 
         let circleColor = color(this.circleColor[0], this.circleColor[1], this.circleColor[2], this.circleColor[3]); //Set the circle colour
