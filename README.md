@@ -17,7 +17,8 @@ This repository hosts the development files for the "Modern Wheel of Fortune," a
 #### Animation Features
 - **Colour transitions**: Smooth transitions across a predefined palette using noise functions, enhancing visual appeal
 - **Rotating Movements**:  Elements such as flowers and chains rotate dynamically, driven by noise and randomness, simulating continual evolution
-- **Blinking Diamonds**: The geometric diamonds in the artwork intermittently change in visibility and size, simulating a blinking effect. This randomness introduces a playful and lively element to the artwork, drawing the viewer’s attention to different areas of the canvas and enhancing the overall complexity.
+- **Blinking Diamonds**: The geometric diamonds in the artwork change in size, simulating a blinking effect. This randomness introduces a playful and lively element to the artwork, drawing the viewer’s attention to different areas of the canvas and enhancing the overall complexity.
+- **Dynamic Glowing Circles**: Circles in the artwork dynamically bounce in size using Perlin noise, simulating a pulsating effect that adds depth and vibrancy.
 
 
 
